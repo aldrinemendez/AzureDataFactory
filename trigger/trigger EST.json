@@ -1,0 +1,25 @@
+{
+	"name": "trigger EST",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_importHTTP_Gen2DL_cases_death_csv",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2023-06-27T12:00:00",
+				"endTime": "2023-06-28T15:48:00",
+				"timeZone": "Eastern Standard Time"
+			}
+		}
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"name": "ds_ecdc_cases_death_raw_http",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_Http_ecdc_opendata",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"BaseURL": {
+					"value": "@dataset().BaseURL",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"RelativeURL": {
+				"type": "string"
+			},
+			"BaseURL": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "ecdc"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@dataset().RelativeURL",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

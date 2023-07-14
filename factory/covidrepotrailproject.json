@@ -1,0 +1,15 @@
+{
+	"name": "covidrepotrailproject",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned,UserAssigned",
+		"principalId": "970dae76-f745-447e-9261-f6999b249efc",
+		"tenantId": "e7c83839-0dd9-4af0-ba63-136435a2ff14",
+		"userAssignedIdentities": {
+			"/subscriptions/ae955599-467c-4288-af04-1d40595fb2a8/resourcegroups/covidreporting/providers/Microsoft.ManagedIdentity/userAssignedIdentities/UseAssMagdIdentity": {
+				"clientId": "b9c8cf6a-e117-4a4e-a7f7-8311af76dd67",
+				"principalId": "d1313d39-cf18-4177-b4c4-84969746c9bb"
+			}
+		}
+	}
+}

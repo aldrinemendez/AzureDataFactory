@@ -1,0 +1,42 @@
+{
+	"name": "pl_cases_death_clean_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "case_deaths_data_cleanup",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"caseDeathsData": {
+								"FileName": "cases_deaths.csv"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "covid"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-13T17:15:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
