@@ -1,0 +1,32 @@
+{
+	"name": "df_DataProfilingDemo",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "MoviesD2",
+						"type": "DatasetReference"
+					},
+					"name": "Movies"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "folderout",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SummaryStats"
+				}
+			],
+			"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as integer,\n\t\tRating as integer,\n\t\tRottenTomato as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Movies\nMovies aggregate(each(match(true()), $$+'_NotNull' = countIf(!isNull($$)), $$ + '_Null' = countIf(isNull($$))),\n\t\teach(match(type=='double'||type=='integer'||type=='short'||type=='decimal'), $$+'_stddev' = round(stddev($$),2), $$ + '_min' = min ($$), $$ + '_max' = max($$), $$ + '_average' = round(avg($$),2), $$ + '_variance' = round(variance($$),2)),\n\t\teach(match(type=='string'), $$+'_maxLength' = max(length($$)))) ~> SummaryStats\nSummaryStats sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['summarystats.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+		}
+	}
+}
