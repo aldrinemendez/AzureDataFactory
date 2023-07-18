@@ -46,6 +46,9 @@
 				},
 				{
 					"name": "lookup2"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -123,6 +126,9 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup2",
+				"sourceDateDimLookup aggregate(groupBy(year_week = concat(year,'-W',lpad(week_of_year,2,'0'))),",
+				"     start_Date = min(date),",
+				"          end_Date = max(date)) ~> aggregate1",
 				"lookup2 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
