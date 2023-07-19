@@ -55,6 +55,15 @@
 				},
 				{
 					"name": "pivotDaily"
+				},
+				{
+					"name": "sortWeekly"
+				},
+				{
+					"name": "sortDaily"
+				},
+				{
+					"name": "selectDaily"
 				}
 			],
 			"scriptLines": [
@@ -159,7 +168,24 @@
 				"     count = sum(toFloat(value)),",
 				"     columnNaming: '$N_$V',",
 				"     lateral: true) ~> pivotDaily",
-				"pivotWeekly sink(validateSchema: false,",
+				"pivotWeekly sort(desc(Reported_year_week, true),",
+				"     asc(country, true)) ~> sortWeekly",
+				"pivotDaily sort(asc(Reported_date, true),",
+				"     asc(country, true)) ~> sortDaily",
+				"sortDaily select(mapColumn(",
+				"          country,",
+				"          country_code_2_digit,",
+				"          country_code_3_digit,",
+				"          population,",
+				"          Reported_year_week,",
+				"          Reported_date,",
+				"          {new Daily hospital occupancy  count} = {count_Daily hospital occupancy},",
+				"          {new Daily ICU occupancy count} = {count_Daily ICU occupancy},",
+				"          source",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectDaily",
+				"sortWeekly sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     store: 'cache',",
